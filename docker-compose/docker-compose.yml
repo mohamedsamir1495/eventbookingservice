@@ -1,0 +1,39 @@
+services:
+  bookingdb:
+    container_name: bookingdb
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: bookingdb
+    extends:
+      file: common-config.yml
+      service: microservice-db-config
+
+  eventbooking-ms:
+    image: "mohamedsamir1495/eventbookingapis"
+    container_name: eventbooking-ms
+    ports:
+      - "587:587"
+      - "8080:8080"
+    environment:
+      SPRING_APPLICATION_NAME: "Event Booking System Rest Apis"
+      SPRING_PROFILES_ACTIVE: mysql
+      SPRING_DATASOURCE_URL: "jdbc:mysql://bookingdb:3306/bookingdb"
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 1234
+      SPRING_MAIL_HOST: smtp.gmail.com
+      SPRING_MAIL_PORT: 587
+      SPRING_MAIL_USERNAME: XXXX@gmail.com
+      SPRING_MAIL_PASSWORD: XXXX
+      SECURITY_JWTKEY: ABCFEDXHuPq8VdbyYFNkANdudQ123654
+      SCHEDULER_AUDIT-INTERVAL: 10000
+    depends_on:
+      bookingdb:
+        condition: service_healthy
+    extends:
+      file: common-config.yml
+      service: microservice-base-config
+
+networks:
+  eventbooking-network:
+    driver: "bridge"

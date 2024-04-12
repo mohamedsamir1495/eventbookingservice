@@ -1,0 +1,34 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: "Event Booking System Rest Apis"
+  profiles:
+    active:
+      - "mysql"
+  security:
+    user:
+      name: XXX
+      password: XXX
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: xxxxx@gmail.com # replace with your email of your google account to use google smtp
+    password: xxxxx # replace with the app password you create on your google account to use google smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+springdoc:
+  swagger-ui:
+    path: /docs
+
+security:
+  jwtKey : jxgEQeXHuPq8VdbyYFNkANdudQ53YUn4
+
+scheduler:
+  audit-interval: 10000
